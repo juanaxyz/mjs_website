@@ -1,21 +1,20 @@
-name : Workflow (Lint, Security, Test, Env)
+name: Run Script
 
-on :
-	push : 
-		branches: [main]
-	pull_request:
-		branches : [main]
-	workflow_dispatch:
-jobs :
-	run-bash-script:
-		runs-on: ubuntu-latest
+on:
+  push:
+    branches:
+      - main
 
-		steps:
-			- name : Checkout Repository
-			uses : actions/checkout@v3
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-			- name : Run Script .sh
-			env:
-				VAR : "Hello From Github Actions"
-			run : bash scripts/script.sh
+      - name: Make Script Executable
+        run: chmod +x script.sh
 
+      - name: Run Script
+        run: ./script.sh
